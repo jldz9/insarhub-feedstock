@@ -48,6 +48,13 @@ requirements:
     - rasterio >=1.3
     - sentineleof
     - numpy <2.0
+    # Ceiling required by numpy <2.0, NOT optional: imagecodecs 2026.3.6+
+    # declares numpy>=2.0 in its dist-info, so `pip check` in the test env
+    # fails with "imagecodecs ... has requirement numpy>=2.0, but you have
+    # numpy 1.26.4". 2026.1.1 is the last release that declares a bare
+    # `numpy`. Nothing in InSARHub imports imagecodecs directly -- it is
+    # pulled in transitively -- so do not drop this pin on that basis.
+    - imagecodecs <=2026.1.1
 
 
 test:
